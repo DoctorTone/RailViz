@@ -4,7 +4,7 @@
 
 let ROT_INC = Math.PI/32;
 let NUM_TRAINS_PER_TRACK = 4;
-let NUM_TRACKS = 2;
+let NUM_TRACKS = 4;
 
 //Camera views
 let cameraViews = [
@@ -135,7 +135,11 @@ class RailApp extends BaseApp {
         let tubeMat = new THREE.MeshLambertMaterial( {color:0x0000ff});
 
         //Tracks
-        let trackOffset = -700;
+        let trackOffset = 700;
+        let trackPositions = [new THREE.Vector3(0, 0, trackOffset),
+            new THREE.Vector3(trackOffset, 0, 0),
+            new THREE.Vector3(0, 0, -trackOffset),
+            new THREE.Vector3(-trackOffset, 0, 0)];
         this.trackGroups = [];
         this.tubeMeshes = [];
         this.tubes = [];
@@ -144,7 +148,7 @@ class RailApp extends BaseApp {
             this.tubeMeshes.push(new THREE.Mesh(this.tubes[i], tubeMat));
             this.trackGroups.push(new THREE.Object3D());
             this.trackGroups[i].add(this.tubeMeshes[i]);
-            this.trackGroups[i].position.z = i * trackOffset;
+            this.trackGroups[i].position.copy(trackPositions[i]);
             this.addToScene(this.trackGroups[i]);
         }
         this.trackGroups[1].rotation.y = Math.PI/2;
