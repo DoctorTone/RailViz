@@ -7,21 +7,21 @@ let NUM_TRAINS_PER_TRACK = 4;
 let NUM_TRACKS = 4;
 
 //Camera views
-let cameraViews = [
-    {
-        front: [ new THREE.Vector3(0, 240, 640), new THREE.Vector3(0, 0, 0)],
-        right: [ new THREE.Vector3(640, 240, 0), new THREE.Vector3(0, 0, 0)],
-        back: [ new THREE.Vector3(0, 240, -640), new THREE.Vector3(0, 0, 0)],
-        left: [ new THREE.Vector3(-640, 240, 0), new THREE.Vector3(0, 0, 0)]
-    },
+let VIEWS = {
+    MAIN: 0,
+    TRACK0: 1,
+    TRACK1: 2,
+    TRACK2: 3,
+    TRACK3: 4
+};
 
-    {
-        front: [ new THREE.Vector3(0, 240, -60), new THREE.Vector3(0, 0, -700)],
-        right: [ new THREE.Vector3(640, 240, -760), new THREE.Vector3(0, 0, -700)],
-        back: [ new THREE.Vector3(0, 240, -1440), new THREE.Vector3(0, 0, -700)],
-        left: [ new THREE.Vector3(-640, 240, -760), new THREE.Vector3(0, 0, -700)]
-    }
-];
+let cameraViews = {
+        all: [new THREE.Vector3(0, 560, 1740), new THREE.Vector3(0, -95, 0)],
+        track0: [ new THREE.Vector3(0, 260, 1360), new THREE.Vector3(0, -250, 0)],
+        track1: [ new THREE.Vector3(820, 290, 630), new THREE.Vector3(820, 50, 0)],
+        track2: [ new THREE.Vector3(0, 270, 50), new THREE.Vector3(0, 255, -5)],
+        track3: [ new THREE.Vector3(-670, 230, 650), new THREE.Vector3(-670, -20, 0)]
+    };
 
 let viewOrder = ['front', 'right', 'back', 'left'];
 
@@ -30,10 +30,8 @@ class RailApp extends BaseApp {
         super();
 
         //Do any initialisation
-        this.cameraView = 0;
-        this.trackView = 0;
+        this.trackView = -1;
         this.running = false;
-        this.trackOffset = 100;
         this.trainHeight = 7;
         this.tempPos = new THREE.Vector3();
         this.posOffset = new THREE.Vector3(0, this.trainHeight, 0);
@@ -45,8 +43,7 @@ class RailApp extends BaseApp {
     init(container) {
         super.init(container);
 
-        let camView = cameraViews[this.trackView];
-        this.setCamera(camView.front);
+        this.setCamera(cameraViews.all);
     }
 
     update() {
@@ -214,34 +211,31 @@ class RailApp extends BaseApp {
         }
     }
 
-    changeView(viewName) {
-        if(!viewName) {
-            console.log("No camera view name!");
-            return;
-        }
-
-        viewName === 'next' ? ++this.cameraView : --this.cameraView;
-
-        if(this.cameraView >= viewOrder.length) this.cameraView = 0;
-        if(this.cameraView < 0) this.cameraView = viewOrder.length - 1;
-
-        let camView = cameraViews[this.trackView];
-        this.setCamera(camView[viewOrder[this.cameraView]]);
-    }
-
     changeTrack(track) {
         if(track === undefined) {
             console.log("No track selected!");
             return;
         }
 
-        if(track != this.trackView) {
-            $('#track' + track).addClass('active');
-            $('#track' + this.trackView).removeClass('active');
-            let camView = cameraViews[track];
-            this.setCamera(camView[viewOrder[this.cameraView]]);
+        //Get track number
+        let trackNumber = track.match(/\d/g);
+        trackNumber = trackNumber.join("");
+        if(isNaN(trackNumber)) {
+            console.log("Invalid track number selected!");
+            return;
         }
-        this.trackView = track;
+
+        if(trackNumber != this.trackView) {
+            $('#track' + trackNumber).addClass('active');
+            $('#track' + this.trackView).removeClass('active');
+            this.setCamera(cameraViews[track]);
+            this.trackView = trackNumber;
+        }
+    }
+
+    resetView() {
+        this.setCamera(cameraViews.all);
+        this.trackView = -1;
     }
 
     selectTrain(train) {
@@ -329,12 +323,12 @@ $(document).ready(function() {
         app.reset();
     });
 
-    $('#track0').on("click", function() {
-        app.changeTrack(0);
+    $('[id^="track"]').on("click", function() {
+        app.changeTrack(this.id);
     });
 
-    $('#track1').on("click", function() {
-        app.changeTrack(1);
+    $('#mainView').on("click", function() {
+        app.resetView();
     });
 
     $('#nextView').on("click", function() {
