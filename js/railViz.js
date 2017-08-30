@@ -20,7 +20,7 @@ let cameraViews = {
         track0: [ new THREE.Vector3(0, 260, 1360), new THREE.Vector3(0, -250, 0)],
         track1: [ new THREE.Vector3(820, 290, 630), new THREE.Vector3(820, 50, 0)],
         track2: [ new THREE.Vector3(0, 270, 50), new THREE.Vector3(0, 255, -5)],
-        track3: [ new THREE.Vector3(-670, 230, 650), new THREE.Vector3(-670, -20, 0)]
+        track3: [ new THREE.Vector3(-830, 235, 645), new THREE.Vector3(-800, -15, -5)]
     };
 
 let viewOrder = ['front', 'right', 'back', 'left'];
@@ -94,7 +94,7 @@ class RailApp extends BaseApp {
 
         //Geometry parameters
         let sceneConfig = {
-            groundWidth: 3000,
+            groundWidth: 5000,
             groundDepth: 3000,
             groundSegments: 8,
             groundColour: 0x1d701d,
@@ -152,11 +152,11 @@ class RailApp extends BaseApp {
         trackShapes.push(new THREE.CatmullRomCurve3([
             new THREE.Vector3(width*0.2, 0, depth*1.1),
             new THREE.Vector3(width*0.2, 0, depth*0.1),
-            new THREE.Vector3(width*1.3, 0, -depth*0.9),
-            new THREE.Vector3(width*0.9, 0, -depth*1.1),
+            new THREE.Vector3(width*1.5, 0, -depth*0.9),
+            new THREE.Vector3(width, 0, -depth*1.1),
             new THREE.Vector3(0, 0, -depth*0.15),
-            new THREE.Vector3(-width*0.9, 0, -depth*1.1),
-            new THREE.Vector3(-width*1.3, 0, -depth*0.9),
+            new THREE.Vector3(-width, 0, -depth*1.1),
+            new THREE.Vector3(-width*1.5, 0, -depth*0.9),
             new THREE.Vector3(-width*0.2, 0, depth*0.1),
             new THREE.Vector3(-width*0.2, 0, depth*1.1)
         ]));
@@ -173,7 +173,7 @@ class RailApp extends BaseApp {
         let trackPositions = [new THREE.Vector3(0, 0, trackOffset),
             new THREE.Vector3(trackOffset, 0, 0),
             new THREE.Vector3(0, 0, -trackOffset),
-            new THREE.Vector3(-trackOffset, 0, 0)];
+            new THREE.Vector3(-trackOffset*1.2, 0, 0)];
         this.trackGroups = [];
         this.tubeMeshes = [];
         this.tubes = [];

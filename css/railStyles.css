@@ -22,13 +22,12 @@ body {
 .centred {
     text-align: center;
 }
-.hoverInfo {
+.infoPanel {
     position: absolute;
     color: #4b91df;
     font-size: 1.5vw;
 }
-.displayInfo {
-    position: absolute;
+.ledDisplay {
     font-family: 'bpdotsregular';
     color: #d9d7dc;
     font-size: 1.8vw;
@@ -40,15 +39,12 @@ body {
     top: 4%;
     left: 4%;
 }
-#controls button {
-
-}
 #timeDateOutput {
+    top: 2%;
+    right: 2%;
     background: #323232;
     padding: 1%;
     border-radius: 10px;
-    top: 4%;
-    right: 4%;
 }
 #version {
     left: 3%;
