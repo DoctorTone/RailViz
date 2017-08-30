@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vehicle Simulation</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css?v=0.1">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css?v=0.1">
+    <link href="css/railStyles.css?v=0.2" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript" src="js/three80.js"></script>
+    <script type="text/javascript" src="js/TrackballControls.js?v=0.1"></script>
+    <script type="text/javascript" src="js/dat.gui.js"></script>
+    <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/baseApp.js?v=0.1"></script>
+    <script type="text/javascript" src="js/dataLoader.js"></script>
+    <script type="text/javascript" src="js/stats.js?v=0.1"></script>
+    <script type="text/javascript" src="js/spriteManager.js?v=0.1"></script>
+    <script type="text/javascript" src="js/trainRoute.js?v=0.2"></script>
+    <script type="text/javascript" src="js/train.js?v=0.1"></script>
+    <script type="text/javascript" src="js/railViz.js?v=0.6"></script>
+
+
+
+</head>
+<body>
+
+<div id="Stats-output" class="noDisplay">
+</div>
+
+<div id="WebGL-output">
+</div>
+
+<div id="controls" class="hoverInfo centred">
+    <div>
+        <button id="startStop" type="button" class="btn btn-primary">Start</button>
+    </div>
+    <div>
+        <button id="reset" type="button" class="btn btn-primary">Reset</button>
+    </div>
+    <div>
+        <button id="track0" type="button" class="btn btn-primary active">Track 1</button>
+        <button id="track1" type="button" class="btn btn-primary">Track 2</button>
+    </div>
+    <div>
+        <button id="previousView" type="button" class="btn btn-primary"><</button>
+        <button id="nextView" type="button" class="btn btn-primary">></button>
+    </div>
+    <div class="dropdown" id="trainSelect">
+        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+            Train ID
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li><a href="#">Train 001</a></li>
+            <li><a href="#">Train 002</a></li>
+            <li><a href="#">Train 003</a></li>
+            <li><a href="#">Train 004</a></li>
+            <li><a href="#">Train 005</a></li>
+            <li><a href="#">Train 006</a></li>
+            <li><a href="#">Train 007</a></li>
+            <li><a href="#">Train 008</a></li>
+        </ul>
+    </div>
+
+</div>
+
+<div id="timeDateOutput" class="displayInfo">
+    <div>
+        <span>Vehicle : </span><span id="trainID">001</span>
+    </div>
+    <div id="clock">
+        <span>Time : </span><span id="hours">00</span><span>:</span><span id="minutes">00</span>
+    </div>
+
+    <div id="delayOutput">
+        <span>Delay : </span><span id="delay">1</span>
+    </div>
+</div>
+
+</body>
+</html>

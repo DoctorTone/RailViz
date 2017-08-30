@@ -1,0 +1,62 @@
+/* Styles for railway visualisations */
+#WebGL-output {
+    /* set margin to 0 and overflow to hidden, to go fullscreen */
+    margin: 0;
+    overflow: hidden;
+}
+
+@font-face {
+    font-family: 'bpdotsregular';
+    src: url('../font/BPdots-webfont.eot');
+    src: url('../font/BPdots-webfont.eot?#iefix') format('embedded-opentype'),
+    url('../font/BPdots-webfont.woff') format('woff'),
+    url('../font/BPdots-webfont.ttf') format('truetype'),
+    url('../font/BPdots-webfont.svg#bpdotsregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+.noDisplay {
+    display: none;
+}
+.centred {
+    text-align: center;
+}
+.hoverInfo {
+    position: absolute;
+    color: #4b91df;
+    font-size: 1.5vw;
+}
+.displayInfo {
+    position: absolute;
+    font-family: 'bpdotsregular';
+    color: #d9d7dc;
+    font-size: 1.8vw;
+}
+#controls {
+    padding: 1%;
+    border: 1px solid white;
+    border-radius: 10px;
+    top: 4%;
+    left: 4%;
+}
+#controls button {
+
+}
+#timeDateOutput {
+    background: #323232;
+    padding: 1%;
+    border-radius: 10px;
+    top: 4%;
+    right: 4%;
+}
+#version {
+    left: 3%;
+    bottom: 2%;
+}
+.dropdown-menu {
+    background-color: #2d6ca2;
+}
+.dropdown-menu>li>a {
+    color: white;
+}
