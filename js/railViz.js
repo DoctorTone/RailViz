@@ -120,7 +120,18 @@ class RailApp extends BaseApp {
 
         //Track
         let width = 200, depth = 275;
-        let sampleClosedSpline = new THREE.CatmullRomCurve3([
+        let trackShapes = [];
+        trackShapes.push(new THREE.CatmullRomCurve3([
+            new THREE.Vector3(width*0.2, 0, depth*1.2),
+            new THREE.Vector3(width*0.2, 0, depth*0.2),
+            new THREE.Vector3(width*1.5, 0, depth*0.2),
+            new THREE.Vector3(width*1.5, 0, -depth*0.2),
+            new THREE.Vector3(-width*1.5, 0, -depth*0.2),
+            new THREE.Vector3(-width*1.5, 0, depth*0.2),
+            new THREE.Vector3(-width*0.2, 0, depth*0.2),
+            new THREE.Vector3(-width*0.2, 0, depth*1.2)
+        ]));
+        trackShapes.push(new THREE.CatmullRomCurve3([
             new THREE.Vector3(0, 0, depth/2),
             new THREE.Vector3(width, 0, depth),
             new THREE.Vector3(width, 0, -depth/10),
@@ -128,10 +139,31 @@ class RailApp extends BaseApp {
             new THREE.Vector3(-width, 0, -depth/10),
             new THREE.Vector3(-width, 0, depth/2),
             new THREE.Vector3(-width/1.5, 0, depth*1.3)
-        ]);
+        ]));
+        trackShapes.push(new THREE.CatmullRomCurve3([
+            new THREE.Vector3(width, 0, depth),
+            new THREE.Vector3(width, 0, -depth),
+            new THREE.Vector3(-width*1.75, 0, -depth),
+            new THREE.Vector3(-width*1.75, 0, 0),
+            new THREE.Vector3(width*0.3, 0, 0),
+            new THREE.Vector3(width*0.3, 0, depth)
+        ]));
+        trackShapes.push(new THREE.CatmullRomCurve3([
+            new THREE.Vector3(width*0.2, 0, depth*1.1),
+            new THREE.Vector3(width*0.2, 0, depth*0.1),
+            new THREE.Vector3(width*1.3, 0, -depth*0.9),
+            new THREE.Vector3(width*0.9, 0, -depth*1.1),
+            new THREE.Vector3(0, 0, -depth*0.15),
+            new THREE.Vector3(-width*0.9, 0, -depth*1.1),
+            new THREE.Vector3(-width*1.3, 0, -depth*0.9),
+            new THREE.Vector3(-width*0.2, 0, depth*0.1),
+            new THREE.Vector3(-width*0.2, 0, depth*1.1)
+        ]));
 
-        sampleClosedSpline.type = 'catmullrom';
-        sampleClosedSpline.closed = true;
+        for(let i=0, numTracks=trackShapes.length; i<numTracks; ++i) {
+            trackShapes[i].type = 'catmullrom';
+            trackShapes[i].closed = true;
+        }
         let segments = 100, radiusSegments = 3, closed = true;
         let tubeMat = new THREE.MeshLambertMaterial( {color:0x0000ff});
 
@@ -145,7 +177,7 @@ class RailApp extends BaseApp {
         this.tubeMeshes = [];
         this.tubes = [];
         for(i=0; i<NUM_TRACKS; ++i) {
-            this.tubes.push(new THREE.TubeGeometry(sampleClosedSpline, segments, 2, radiusSegments, closed));
+            this.tubes.push(new THREE.TubeGeometry(trackShapes[i], segments, 2, radiusSegments, closed));
             this.tubeMeshes.push(new THREE.Mesh(this.tubes[i], tubeMat));
             this.trackGroups.push(new THREE.Object3D());
             this.trackGroups[i].add(this.tubeMeshes[i]);
@@ -247,13 +279,13 @@ class RailApp extends BaseApp {
             console.log("No train specified!");
             return;
         }
-        let trainTxt = train.slice(-1);
-        let trainNumber = parseInt(trainTxt, 10);
+        let trainNumber = train.match(/\d/g);
+        trainNumber = trainNumber.join("");
         if(isNaN(trainNumber)) {
             console.log("Invalid train number");
             return;
         }
-        $('#trainID').html("00" + trainNumber);
+        $('#trainID').html(trainNumber);
         this.trainSprites[--trainNumber].material = this.trainMatSelected;
         this.trainSprites[this.currentTrain].material = this.defaultTrainMat;
         this.ghostSprites[trainNumber].material = this.ghostMatSelected;
