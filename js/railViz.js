@@ -65,7 +65,11 @@ class RailApp extends BaseApp {
 
                     //Update info
                     if(this.currentTrain === i) {
-                        $('#minutes').html(Math.round(train.getCurrentTime() + train.getStartTime()));
+                        let minutes = Math.round(train.getCurrentTime() + train.getStartTime());
+                        if(minutes < 10) {
+                            minutes = "0" + minutes;
+                        }
+                        $('#minutes').html(minutes);
                         $('#delay').html(train.getTripDelay());
                     }
 
@@ -256,7 +260,7 @@ class RailApp extends BaseApp {
         this.ghostSprites[this.currentTrain].material = this.defaultGhostMat;
         this.currentTrain = trainNumber;
         if(!this.trains[trainNumber].running()) {
-            $('#minutes').html(0);
+            $('#minutes').html("00");
         }
     }
 
@@ -271,7 +275,7 @@ class RailApp extends BaseApp {
         //Animations
         this.running = false;
         $('#startStop').html("Start");
-        $('#minutes').html(0);
+        $('#minutes').html("00");
         $('#delay').html(0);
         this.trainsStopped = 0;
 
