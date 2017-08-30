@@ -98,11 +98,12 @@ class RailApp extends BaseApp {
             groundDepth: 3000,
             groundSegments: 8,
             groundColour: 0x1d701d,
-            labelScaleX: 70,
-            labelScaleY: 50,
+            labelScaleX: 92.5,
+            labelScaleY: 57.5,
             pointerScale: 50,
             trainScaleX: 15,
-            trainScaleY: 15
+            trainScaleY: 15,
+            labelOffsetY: 67.5
         };
 
         let textureLoader = new THREE.TextureLoader();
@@ -208,7 +209,7 @@ class RailApp extends BaseApp {
                 pointerSprite.scale.set(sceneConfig.pointerScale, sceneConfig.pointerScale, 1);
                 pos = this.tubes[track].parameters.path.getPointAt( i/numPointers );
                 pointerSprite.position.set(pos.x, pos.y+this.pinHeight, pos.z);
-                labelPos.set(pointerSprite.position.x, 50, pointerSprite.position.z);
+                labelPos.set(pointerSprite.position.x, sceneConfig.labelOffsetY, pointerSprite.position.z);
                 label = spriteManager.create(trainRoute.routeData[i].stationName, labelPos, labelScale, 32, 1, true, false);
                 this.trackGroups[track].add(label);
             }
