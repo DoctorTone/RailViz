@@ -3,30 +3,30 @@
  */
 //Holds attributes for each train
 
-function Train() {
-    this.enginePosition = new THREE.Vector3();
-    this.ghostPosition = new THREE.Vector3();
-    this.interStopDistance = 0;
-    this.movementPerSecond = 0;
-    this.interStopTime = 0;
-    this.currentTime = 0;
-    this.currentStop = 0;
-    this.realTime = 0;
-    this.timeToNextStop = 0;
-    this.realTimeToNextStop = 0;
-    this.realTimeInc = 0;
-    this.delayTime = 0;
-    this.delayTimeInc = 0;
-    this.animating = false;
-    this.engineSprite = undefined;
-    this.ghostSprite = undefined;
-    this.tripTime = 0;
-    this.startTime = 0;
-    this.trainRoute = trainRoute;
-}
+class Train {
+    constructor() {
+        this.enginePosition = new THREE.Vector3();
+        this.ghostPosition = new THREE.Vector3();
+        this.interStopDistance = 0;
+        this.movementPerSecond = 0;
+        this.interStopTime = 0;
+        this.currentTime = 0;
+        this.currentStop = 0;
+        this.realTime = 0;
+        this.timeToNextStop = 0;
+        this.realTimeToNextStop = 0;
+        this.realTimeInc = 0;
+        this.delayTime = 0;
+        this.delayTimeInc = 0;
+        this.animating = false;
+        this.engineSprite = undefined;
+        this.ghostSprite = undefined;
+        this.tripTime = 0;
+        this.startTime = 0;
+        this.trainRoute = trainRoute;
+    }
 
-Train.prototype = {
-    init: function(trackLength, id) {
+    init(trackLength, id) {
         this.currentStop = 0;
         this.currentTime = 0;
         this.animating = false;
@@ -34,7 +34,7 @@ Train.prototype = {
         this.numStops = this.trainRoute.routeData.length;
         this.startTime = id * 5;
         this.tripTime = this.trainRoute.routeData[this.numStops-1].time - this.trainRoute.routeData[0].time;
-        
+
         this.interStopDistance = trackLength / this.numStops;
         this.movementPerSecond = trackLength / this.tripTime;
         this.interStopTime = this.interStopDistance / this.movementPerSecond;
@@ -45,44 +45,44 @@ Train.prototype = {
 
 
         //Ghost engine
-        var delay = this.trainRoute.routeData[this.currentStop+1].delay - this.trainRoute.routeData[this.currentStop].delay + this.interStopTime;
+        let delay = this.trainRoute.routeData[this.currentStop+1].delay - this.trainRoute.routeData[this.currentStop].delay + this.interStopTime;
         this.delayTime = this.trainRoute.routeData[this.currentStop].delay;
         this.delayTimeInc = delay/this.interStopTime;
-    },
+    }
     
-    getTrainIcon: function() {
+    getTrainIcon() {
         return this.engineSprite;
-    },
+    }
     
-    getGhostIcon: function() {
+    getGhostIcon() {
         return this.ghostSprite;
-    },
+    }
 
-    setEnginePosition: function(pos) {
+    setEnginePosition(pos) {
         this.engineSprite.position.set(pos.x, pos.y, pos.z);
-    },
+    }
     
-    setGhostPosition: function(pos) {
+    setGhostPosition(pos) {
         this.ghostSprite.position.set(pos.x, pos.y, pos.z);
-    },
+    }
     
-    getDelayTime: function () {
+    getDelayTime() {
         return this.delayTime;
-    },
+    }
 
-    getStartTime: function() {
+    getStartTime() {
         return this.startTime;
-    },
+    }
 
-    getCurrentTime: function() {
+    getCurrentTime() {
         return this.currentTime;
-    },
+    }
 
-    passedStop: function() {
+    passedStop() {
         return this.currentTime >= this.timeToNextStop;
-    },
+    }
 
-    gotoNextStop: function() {
+    gotoNextStop() {
         this.currentTime = this.timeToNextStop;
         ++this.currentStop;
         
@@ -92,14 +92,14 @@ Train.prototype = {
             this.timeToNextStop += this.interStopTime;
             this.realTimeToNextStop = this.trainRoute.routeData[this.currentStop+1].time - this.trainRoute.routeData[this.currentStop].time;
             this.realTimeInc = this.realTimeToNextStop / this.interStopTime;
-            var delay = this.trainRoute.routeData[this.currentStop+1].delay - this.trainRoute.routeData[this.currentStop].delay + this.interStopTime;
+            let delay = this.trainRoute.routeData[this.currentStop+1].delay - this.trainRoute.routeData[this.currentStop].delay + this.interStopTime;
             this.delayTimeInc = delay/this.interStopTime;
         }
 
         return this.animating;
-    },
+    }
 
-    update: function(delta) {
+    update(delta) {
         this.currentTime += delta;
         if(this.currentTime >= this.startTime && this.currentStop === 0) {
             //Get time from zero
@@ -114,29 +114,29 @@ Train.prototype = {
         this.delayTime += (delta * this.delayTimeInc);
 
         return true;
-    },
+    }
     
-    getTripTime: function() {
+    getTripTime() {
         return this.tripTime;
-    },
+    }
 
-    getTripDelay: function() {
+    getTripDelay() {
         return this.trainRoute.routeData[this.currentStop].delay;
-    },
+    }
 
-    getCurrentStop: function() {
+    getCurrentStop() {
         return this.currentStop;
-    },
+    }
 
-    running: function() {
+    running() {
         return this.animating;
-    },
+    }
 
-    reset: function() {
+    reset() {
         this.animating = false;
         this.currentTime = 0;
         this.currentStop = 0;
         this.realTime = 0;
         this.timeToNextStop = this.interStopTime;
     }
-};
+}
