@@ -46,49 +46,6 @@ class RailApp extends BaseApp {
         this.setCamera(cameraViews.all);
     }
 
-    update() {
-        let delta = this.clock.getDelta();
-
-        if(this.running) {
-            for(let i=0; i<this.trains.length; ++i) {
-                let train = this.trains[i];
-                if(train.update(delta)) {
-                    //Update visuals
-                    let tripTime = train.getTripTime();
-                    this.tempPos = this.tubes[0].parameters.path.getPointAt( train.getCurrentTime() / tripTime);
-                    this.tempPos.add(this.posOffset);
-                    this.trainSprites[i].position.set(this.tempPos.x, this.tempPos.y, this.tempPos.z);
-
-                    this.tempPos = this.tubes[0].parameters.path.getPointAt( train.getDelayTime() / tripTime );
-                    this.tempPos.add(this.posOffset);
-                    this.ghostSprites[i].position.set(this.tempPos.x, this.tempPos.y, this.tempPos.z);
-
-                    //Update info
-                    if(this.currentTrain === i) {
-                        let minutes = Math.round(train.getCurrentTime() + train.getStartTime());
-                        if(minutes < 10) {
-                            minutes = "0" + minutes;
-                        }
-                        $('#minutes').html(minutes);
-                        $('#delay').html(train.getTripDelay());
-                    }
-
-                    if(train.passedStop()) {
-                        if(!train.gotoNextStop()) {
-                            //Need to take ghosts into account too
-                            if(++this.trainsStopped >= (NUM_TRAINS_PER_TRACK * 2)) {
-                                //console.log("All trains stopped");
-                                this.reset();
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        super.update();
-    }
-
     createScene() {
         super.createScene();
 
@@ -103,7 +60,9 @@ class RailApp extends BaseApp {
             pointerScale: 50,
             trainScaleX: 15,
             trainScaleY: 15,
-            labelOffsetY: 67.5
+            labelOffsetY: 67.5,
+            POST_RADIUS_TOP: 5,
+            POST_HEIGHT: 175
         };
 
         let textureLoader = new THREE.TextureLoader();
@@ -177,6 +136,12 @@ class RailApp extends BaseApp {
         this.trackGroups = [];
         this.tubeMeshes = [];
         this.tubes = [];
+        //Signage
+        let postGeom = new THREE.CylinderBufferGeometry(sceneConfig.POST_RADIUS_TOP, sceneConfig.POST_RADIUS_TOP, sceneConfig.POST_HEIGHT);
+        let postMat = new THREE.MeshLambertMaterial( {color: 0xffffff} );
+        let post, sign, signPostOffset=10;
+        let labelScale = new THREE.Vector3(sceneConfig.labelScaleX, sceneConfig.labelScaleY, 1);
+        let signPosts = ["Southern Line", "Eastern Line", "Northern Line", "Western Line"];
         for(i=0; i<NUM_TRACKS; ++i) {
             this.tubes.push(new THREE.TubeGeometry(trackShapes[i], segments, 2, radiusSegments, closed));
             this.tubeMeshes.push(new THREE.Mesh(this.tubes[i], tubeMat));
@@ -184,6 +149,13 @@ class RailApp extends BaseApp {
             this.trackGroups[i].add(this.tubeMeshes[i]);
             this.trackGroups[i].position.copy(trackPositions[i]);
             this.addToScene(this.trackGroups[i]);
+            post = new THREE.Mesh(postGeom, postMat);
+            post.position.copy(trackPositions[i]);
+            post.position.y += sceneConfig.POST_HEIGHT/2;
+            this.addToScene(post);
+            trackPositions[i].y += (sceneConfig.POST_HEIGHT + signPostOffset);
+            sign = spriteManager.create(signPosts[i], trackPositions[i], labelScale, 32, 1, true, true);
+            this.addToScene(sign);
         }
         this.trackGroups[1].rotation.y = Math.PI/2;
 
@@ -196,7 +168,7 @@ class RailApp extends BaseApp {
         let numPointers = trainRoute.routeData.length;
 
         this.pointerSprites = [];
-        let labelPos = new THREE.Vector3(), labelScale = new THREE.Vector3(sceneConfig.labelScaleX, sceneConfig.labelScaleY, 1);
+        let labelPos = new THREE.Vector3();
         let pos = new THREE.Vector3();
         let label;
         //Need to do for each track
@@ -246,6 +218,49 @@ class RailApp extends BaseApp {
                 ghostSprite.scale.set(sceneConfig.trainScaleX, sceneConfig.trainScaleY, 1);
             }
         }
+    }
+
+    update() {
+        let delta = this.clock.getDelta();
+
+        if(this.running) {
+            for(let i=0; i<this.trains.length; ++i) {
+                let train = this.trains[i];
+                if(train.update(delta)) {
+                    //Update visuals
+                    let tripTime = train.getTripTime();
+                    this.tempPos = this.tubes[0].parameters.path.getPointAt( train.getCurrentTime() / tripTime);
+                    this.tempPos.add(this.posOffset);
+                    this.trainSprites[i].position.set(this.tempPos.x, this.tempPos.y, this.tempPos.z);
+
+                    this.tempPos = this.tubes[0].parameters.path.getPointAt( train.getDelayTime() / tripTime );
+                    this.tempPos.add(this.posOffset);
+                    this.ghostSprites[i].position.set(this.tempPos.x, this.tempPos.y, this.tempPos.z);
+
+                    //Update info
+                    if(this.currentTrain === i) {
+                        let minutes = Math.round(train.getCurrentTime() + train.getStartTime());
+                        if(minutes < 10) {
+                            minutes = "0" + minutes;
+                        }
+                        $('#minutes').html(minutes);
+                        $('#delay').html(train.getTripDelay());
+                    }
+
+                    if(train.passedStop()) {
+                        if(!train.gotoNextStop()) {
+                            //Need to take ghosts into account too
+                            if(++this.trainsStopped >= (NUM_TRAINS_PER_TRACK * 2)) {
+                                //console.log("All trains stopped");
+                                this.reset();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        super.update();
     }
 
     changeTrack(track) {

@@ -47,14 +47,17 @@ var spriteManager = (function () {
 
             //Draw rounded rectangle
             //Position text in centre of canvas
-            var offset = (canvas.width - (textWidth + defaultBorderThickness))/2;
+            let width = textWidth + (defaultBorderThickness*2);
+            let height = (fontSize) + (defaultBorderThickness*2);
+            let xStart = (canvas.width - width)/2;
+            let yStart = (CANVAS_HEIGHT - height)/1.85;
             if(rect) {
-                roundRect(context, offset, defaultBorderThickness/2, defaultBorderThickness/2, textWidth + defaultBorderThickness, fontSize * 1.4 + defaultBorderThickness, defaultRadius);
+                roundRect(context, xStart, yStart, width, height, defaultRadius);
             }
 
             //Text
             context.fillStyle = textColour;
-            context.fillText( spriteName, defaultBorderThickness + offset, CANVAS_HEIGHT/2 + fontSize/2);
+            context.fillText( spriteName, defaultBorderThickness + xStart, CANVAS_HEIGHT/2 + fontSize/2);
 
             // canvas contents will be used for a texture
             var texture = new THREE.Texture(canvas);
@@ -188,19 +191,18 @@ var spriteManager = (function () {
 })();
 
 // function for drawing rounded rectangles
-function roundRect(ctx, offset, x, y, w, h, r)
+function roundRect(ctx, xStart, yStart, width, height, radius)
 {
-    x += offset;
     ctx.beginPath();
-    ctx.moveTo(x+r, y);
-    ctx.lineTo(x+w-r, y);
-    ctx.quadraticCurveTo(x+w, y, x+w, y+r);
-    ctx.lineTo(x+w, y+h-r);
-    ctx.quadraticCurveTo(x+w, y+h, x+w-r, y+h);
-    ctx.lineTo(x+r, y+h);
-    ctx.quadraticCurveTo(x, y+h, x, y+h-r);
-    ctx.lineTo(x, y+r);
-    ctx.quadraticCurveTo(x, y, x+r, y);
+    ctx.moveTo(xStart + radius, yStart);
+    ctx.lineTo(xStart + width - radius, yStart);
+    ctx.quadraticCurveTo(xStart + width, yStart, xStart + width, yStart + radius);
+    ctx.lineTo(xStart + width, yStart + height - radius);
+    ctx.quadraticCurveTo(xStart + width, yStart + height, xStart + width - radius, yStart + height);
+    ctx.lineTo(xStart +radius, yStart + height);
+    ctx.quadraticCurveTo(xStart, yStart + height, xStart, yStart + height - radius);
+    ctx.lineTo(xStart, yStart + radius);
+    ctx.quadraticCurveTo(xStart, yStart, xStart + radius, yStart);
     ctx.closePath();
     ctx.fill();
     ctx.stroke();
