@@ -363,15 +363,15 @@ class RailApp extends BaseApp {
 
     startStopAnimation() {
         this.running = !this.running;
-        $('#startStop').html(this.running ? "Stop" : "Start");
+        let elem = $('#startStop');
+        elem.attr("src", this.running ? "images/pause-button.png" : "images/play-button.png");
     }
 
     reset() {
         //Reset everything
-
         //Animations
         this.running = false;
-        $('#startStop').html("Start");
+        $('#startStop').attr("src", "images/play-button.png");
         $('#minutes').html("00");
         $('#delay').html(0);
         this.trainsStopped = 0;
