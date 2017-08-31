@@ -199,7 +199,7 @@ class RailApp extends BaseApp {
         }
 
         //Set up trains
-        let length = this.tubes[0].parameters.path.getLength();
+        let length;
 
         //Train materials
         this.defaultTrainMat = new THREE.SpriteMaterial( {color: 0x000000, map: trainTex} );
@@ -210,10 +210,12 @@ class RailApp extends BaseApp {
         this.ghostSprites = [];
         let currentTrain, trainSprite, ghostSprite;
         for(track=0; track<NUM_TRACKS; ++track) {
+            length = this.tubes[track].parameters.path.getLength();
             for(i=0; i<NUM_TRAINS_PER_TRACK; ++i) {
                 currentTrain = new Train();
                 this.trains.push(currentTrain);
                 currentTrain.init(length, i);
+                currentTrain.setTrack(track);
 
                 trainSprite = new THREE.Sprite(i === 0 && track === 0 ?  this.trainMatSelected : this.defaultTrainMat);
                 this.trainSprites.push(trainSprite);
@@ -266,13 +268,14 @@ class RailApp extends BaseApp {
                 if(train.update(delta)) {
                     //Update visuals
                     let tripTime = train.getTripTime();
-                    this.tempPos = this.tubes[0].parameters.path.getPointAt( train.getCurrentTime() / tripTime);
+                    let track = train.getTrack();
+                    this.tempPos = this.tubes[track].parameters.path.getPointAt( train.getCurrentTime() / tripTime);
                     this.tempPos.add(this.posOffset);
-                    this.trainSprites[i].position.set(this.tempPos.x, this.tempPos.y, this.tempPos.z);
+                    this.trainSprites[i].position.copy(this.tempPos);
 
-                    this.tempPos = this.tubes[0].parameters.path.getPointAt( train.getDelayTime() / tripTime );
+                    this.tempPos = this.tubes[track].parameters.path.getPointAt( train.getDelayTime() / tripTime );
                     this.tempPos.add(this.posOffset);
-                    this.ghostSprites[i].position.set(this.tempPos.x, this.tempPos.y, this.tempPos.z);
+                    this.ghostSprites[i].position.copy(this.tempPos);
 
                     //Update info
                     if(this.currentTrain === i) {

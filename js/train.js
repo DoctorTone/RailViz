@@ -49,7 +49,15 @@ class Train {
         this.delayTime = this.trainRoute.routeData[this.currentStop].delay;
         this.delayTimeInc = delay/this.interStopTime;
     }
-    
+
+    setTrack(track) {
+        this.track = track;
+    }
+
+    getTrack() {
+        return this.track;
+    }
+
     getTrainIcon() {
         return this.engineSprite;
     }
