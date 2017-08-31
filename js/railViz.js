@@ -356,6 +356,9 @@ class RailApp extends BaseApp {
         if(!this.trains[trainNumber].running()) {
             $('#minutes').html("00");
         }
+        //Change camera view to reflect change
+        let track = Math.floor(trainNumber/this.numTracks);
+        this.changeTrack("track" + track);
     }
 
     startStopAnimation() {
