@@ -55,8 +55,10 @@ class RailApp extends BaseApp {
             groundDepth: 3000,
             groundSegments: 8,
             groundColour: 0x1d701d,
-            labelScaleX: 92.5,
-            labelScaleY: 57.5,
+            pinLabelScaleX: 92.5,
+            pinLabelScaleY: 57.5,
+            signLabelScaleX: 200,
+            signLabelScaleY: 140,
             pointerScale: 50,
             trainScaleX: 15,
             trainScaleY: 15,
@@ -139,8 +141,8 @@ class RailApp extends BaseApp {
         //Signage
         let postGeom = new THREE.CylinderBufferGeometry(sceneConfig.POST_RADIUS_TOP, sceneConfig.POST_RADIUS_TOP, sceneConfig.POST_HEIGHT);
         let postMat = new THREE.MeshLambertMaterial( {color: 0xffffff} );
-        let post, sign, signPostOffset=10;
-        let labelScale = new THREE.Vector3(sceneConfig.labelScaleX, sceneConfig.labelScaleY, 1);
+        let post, sign, signPostOffset=20;
+        let labelScale = new THREE.Vector3(sceneConfig.signLabelScaleX, sceneConfig.signLabelScaleY, 1);
         let signPosts = ["Southern Line", "Eastern Line", "Northern Line", "Western Line"];
         for(i=0; i<NUM_TRACKS; ++i) {
             this.tubes.push(new THREE.TubeGeometry(trackShapes[i], segments, 2, radiusSegments, closed));
@@ -172,6 +174,8 @@ class RailApp extends BaseApp {
         let pos = new THREE.Vector3();
         let label;
         //Need to do for each track
+        labelScale.x = sceneConfig.pinLabelScaleX;
+        labelScale.y = sceneConfig.pinLabelScaleY;
         let pointerSprite, track;
         for(track=0; track<NUM_TRACKS; ++track) {
             for(i=0; i<numPointers; ++i) {
