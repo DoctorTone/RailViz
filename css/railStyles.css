@@ -34,6 +34,7 @@ body {
     padding: 1% 0;
     border-radius: 10px;
     background-color: rgba(70, 70, 70, 0.5);
+    height: 21vh;
 }
 .ledDisplay {
     font-family: 'bpdotsregular';
@@ -49,7 +50,7 @@ body {
 }
 #camControls {
     top: 2%;
-    left: 17.5%;
+    left: 16%;
     width: 12.5%;
 }
 #timeDateOutput {
@@ -62,6 +63,9 @@ body {
 #version {
     left: 3%;
     bottom: 2%;
+}
+#selectTrackContainer {
+    margin-top: 5%;
 }
 .dropdown {
     margin-top: 3%;

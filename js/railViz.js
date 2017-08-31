@@ -128,7 +128,8 @@ class RailApp extends BaseApp {
             new THREE.Vector3(-width*0.2, 0, depth*1.1)
         ]));
 
-        for(let i=0, numTracks=trackShapes.length; i<numTracks; ++i) {
+        let numTracks = trackShapes.length;
+        for(let i=0; i<numTracks; ++i) {
             trackShapes[i].type = 'catmullrom';
             trackShapes[i].closed = true;
         }
@@ -228,6 +229,9 @@ class RailApp extends BaseApp {
                 ghostSprite.scale.set(sceneConfig.trainScaleX, sceneConfig.trainScaleY, 1);
             }
         }
+
+        //Set up variables for later use
+        this.numTracks = numTracks;
     }
 
     makeSkyBox() {
@@ -313,6 +317,7 @@ class RailApp extends BaseApp {
         if(trackNumber != this.trackView) {
             $('#track' + trackNumber).addClass('active');
             $('#track' + this.trackView).removeClass('active');
+            $('#mainView').removeClass("active");
             this.setCamera(cameraViews[track]);
             this.trackView = trackNumber;
         }
@@ -321,6 +326,14 @@ class RailApp extends BaseApp {
     resetView() {
         this.setCamera(cameraViews.all);
         this.trackView = -1;
+        $('#mainView').addClass("active");
+        this.deselectTracks();
+    }
+
+    deselectTracks() {
+        for(let i=0; i<this.numTracks; ++i) {
+            $('#track' + i).removeClass("active");
+        }
     }
 
     selectTrain(train) {
