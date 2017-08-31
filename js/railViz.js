@@ -49,6 +49,9 @@ class RailApp extends BaseApp {
     createScene() {
         super.createScene();
 
+        //Skybox
+        this.addToScene(this.makeSkyBox());
+
         //Geometry parameters
         let sceneConfig = {
             groundWidth: 5000,
@@ -70,15 +73,18 @@ class RailApp extends BaseApp {
         let textureLoader = new THREE.TextureLoader();
         let pointTex = textureLoader.load("images/pin.png");
         let trainTex = textureLoader.load("images/engineWhite.png");
+        textureLoader.load("images/terrain.jpg", groundTex => {
+            let planeGeom = new THREE.PlaneBufferGeometry(sceneConfig.groundWidth, sceneConfig.groundDepth,
+                sceneConfig.groundSegments, sceneConfig.groundSegments);
+            let planeMat = new THREE.MeshLambertMaterial( {map: groundTex} );
+            let plane = new THREE.Mesh(planeGeom, planeMat);
+            plane.rotation.x = -Math.PI/2;
+            this.addToScene(plane);
+        });
 
         //Ground plane
         let i;
-        let planeGeom = new THREE.PlaneBufferGeometry(sceneConfig.groundWidth, sceneConfig.groundDepth,
-            sceneConfig.groundSegments, sceneConfig.groundSegments);
-        let planeMat = new THREE.MeshLambertMaterial( {color: sceneConfig.groundColour});
-        let plane = new THREE.Mesh(planeGeom, planeMat);
-        plane.rotation.x = -Math.PI/2;
-        this.addToScene(plane);
+
 
         //Track
         let width = 200, depth = 275;
@@ -222,6 +228,29 @@ class RailApp extends BaseApp {
                 ghostSprite.scale.set(sceneConfig.trainScaleX, sceneConfig.trainScaleY, 1);
             }
         }
+    }
+
+    makeSkyBox() {
+        let texturePath = "textures/skybox/";
+        let skyTextures = ["skyRight", "skyLeft", "skyTop", "skyBottom", "skyBack", "skyFront"];
+        let urls = [];
+        for(let i=0, numTexs=skyTextures.length; i<numTexs; ++i) {
+            urls.push(texturePath + skyTextures[i] + ".jpg");
+        }
+        let skyboxCubemap = new THREE.CubeTextureLoader().load( urls );
+        skyboxCubemap.format = THREE.RGBFormat;
+
+        let skyboxShader = THREE.ShaderLib['cube'];
+        skyboxShader.uniforms['tCube'].value = skyboxCubemap;
+        let size = 8000;
+
+        return new THREE.Mesh(
+            new THREE.BoxGeometry( size, size, size ),
+            new THREE.ShaderMaterial({
+                fragmentShader : skyboxShader.fragmentShader, vertexShader : skyboxShader.vertexShader,
+                uniforms : skyboxShader.uniforms, depthWrite : false, side : THREE.BackSide
+            })
+        );
     }
 
     update() {
