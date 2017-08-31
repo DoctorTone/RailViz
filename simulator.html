@@ -6,7 +6,7 @@
 
     <link rel="stylesheet" href="css/bootstrap.min.css?v=0.1">
     <link rel="stylesheet" href="css/bootstrap-theme.min.css?v=0.1">
-    <link href="css/railStyles.css?v=0.2" rel="stylesheet" type="text/css">
+    <link href="css/railStyles.css?v=0.3" rel="stylesheet" type="text/css">
 
     <script type="text/javascript" src="js/three86.js"></script>
     <script type="text/javascript" src="js/TrackballControls.js?v=0.1"></script>
@@ -32,27 +32,22 @@
 <div id="WebGL-output">
 </div>
 
-<div id="controls" class="infoPanel centred">
-    <div>
-        <button id="startStop" type="button" class="btn btn-primary">Start</button>
+<div id="simControls" class="clearInfoPanel centred">
+    <p>Simulation</p>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="images/play-button.png" id="startStop">
+            </div>
+            <div class="col-md-6">
+                <img src="images/rewind-button.png" id="reset">
+            </div>
+        </div>
     </div>
-    <div>
-        <button id="reset" type="button" class="btn btn-primary">Reset</button>
-    </div>
-    <div>
-        <button id="mainView" type="button" class="btn btn-primary">Main</button>
-    </div>
-    <div>
-        <button id="track0" type="button" class="btn btn-primary active">Track 1</button>
-        <button id="track1" type="button" class="btn btn-primary">Track 2</button>
-    </div>
-    <div>
-        <button id="track2" type="button" class="btn btn-primary active">Track 3</button>
-        <button id="track3" type="button" class="btn btn-primary">Track 4</button>
-    </div>
+
     <div class="dropdown" id="trainSelect">
         <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-            Train ID
+            Train
             <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
@@ -74,7 +69,21 @@
             <li><a href="#">Train 16</a></li>
         </ul>
     </div>
+</div>
 
+<div id="camControls" class="clearInfoPanel centred">
+    <p>Camera</p>
+    <div>
+        <button id="mainView" type="button" class="btn btn-primary">Main</button>
+    </div>
+    <div>
+        <button id="track0" type="button" class="btn btn-primary active">Track 1</button>
+        <button id="track1" type="button" class="btn btn-primary">Track 2</button>
+    </div>
+    <div>
+        <button id="track2" type="button" class="btn btn-primary active">Track 3</button>
+        <button id="track3" type="button" class="btn btn-primary">Track 4</button>
+    </div>
 </div>
 
 <div id="timeDateOutput" class="infoPanel ledDisplay">

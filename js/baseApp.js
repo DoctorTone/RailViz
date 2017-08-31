@@ -121,19 +121,17 @@ class BaseApp {
         let ambientLight = new THREE.AmbientLight(0x383838);
         scene.add(ambientLight);
 
-        /*
          let directionalLight = new THREE.DirectionalLight( 0xffffff, 1.0 );
-         directionalLight.position.set( 20, 20, 20 );
+         directionalLight.position.set( 100, 100, 100 );
          directionalLight.name = "sunlight";
          scene.add( directionalLight );
-         */
 
-
-
+         /*
         let pointLight = new THREE.PointLight(0xffffff);
         pointLight.position.set(0,100,100);
         pointLight.name = 'PointLight';
         scene.add(pointLight);
+        */
 
         return this.scenes.length-1;
     }
