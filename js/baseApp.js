@@ -81,7 +81,7 @@ class BaseApp {
         event.preventDefault();
         this.pickedObjects.length = 0;
 
-        if(event.type == 'mouseup') {
+        if(event.type === 'mouseup') {
             this.mouse.endX = event.clientX;
             this.mouse.endY = event.clientY;
             this.mouse.down = false;
@@ -158,9 +158,9 @@ class BaseApp {
         this.controls.zoomSpeed = 1.0;
         this.controls.panSpeed = 1.0;
 
-        this.controls.noRotate = true;
-        this.controls.noPan = true;
-        this.controls.noRoll = true;
+        this.controls.noRotate = false;
+        this.controls.noPan = false;
+        this.controls.noRoll = false;
 
         this.controls.staticMoving = true;
         this.controls.dynamicDampingFactor = 0.3;

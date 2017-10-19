@@ -82,50 +82,78 @@ class RailApp extends BaseApp {
             this.addToScene(plane);
         });
 
+        //Platform
+        let mtlLoader = new THREE.MTLLoader();
+        mtlLoader.setPath("./models/");
+        mtlLoader.load("platform.mtl", materials => {
+            materials.preload();
+
+            let objLoader = new THREE.OBJLoader();
+            objLoader.setMaterials(materials);
+            objLoader.setPath("./models/");
+            objLoader.load("platform.obj", platform => {
+                const SCALE = 150;
+                platform.scale.set(SCALE, SCALE, SCALE);
+                platform.position.set(0, -42.5, 700);
+                let platformPos = [new THREE.Vector3(775, -42.5, 0),
+                            new THREE.Vector3(0, -42.5, -750),
+                            new THREE.Vector3(-800, -42.5, -25)];
+                let platformScale = [150, 175, 175];
+                let nextPlatform;
+                for(let i=0, numPlatforms=platformPos.length; i<numPlatforms; ++i) {
+                    nextPlatform = platform.clone();
+                    nextPlatform.position.copy(platformPos[i]);
+                    nextPlatform.scale.set(platformScale[i], SCALE, platformScale[i]);
+                    this.addToScene(nextPlatform);
+                }
+                this.addToScene(platform);
+            })
+        });
+
         //Ground plane
         let i;
 
 
         //Track
-        let width = 200, depth = 275;
+        let width = 200, depth = 275, height = 20;
         let trackShapes = [];
         trackShapes.push(new THREE.CatmullRomCurve3([
-            new THREE.Vector3(width*0.2, 0, depth*1.2),
-            new THREE.Vector3(width*0.2, 0, depth*0.2),
-            new THREE.Vector3(width*1.5, 0, depth*0.2),
-            new THREE.Vector3(width*1.5, 0, -depth*0.2),
-            new THREE.Vector3(-width*1.5, 0, -depth*0.2),
-            new THREE.Vector3(-width*1.5, 0, depth*0.2),
-            new THREE.Vector3(-width*0.2, 0, depth*0.2),
-            new THREE.Vector3(-width*0.2, 0, depth*1.2)
+            new THREE.Vector3(width*0.2, height, depth*1.2),
+            new THREE.Vector3(width*0.2, height, depth*0.2),
+            new THREE.Vector3(width*1.5, height, depth*0.2),
+            new THREE.Vector3(width*1.5, height, -depth*0.2),
+            new THREE.Vector3(-width*1.5, height, -depth*0.2),
+            new THREE.Vector3(-width*1.5, height, depth*0.2),
+            new THREE.Vector3(-width*0.2, height, depth*0.2),
+            new THREE.Vector3(-width*0.2, height, depth*1.2)
         ]));
         trackShapes.push(new THREE.CatmullRomCurve3([
-            new THREE.Vector3(0, 0, depth/2),
-            new THREE.Vector3(width, 0, depth),
-            new THREE.Vector3(width, 0, -depth/10),
-            new THREE.Vector3(0, 0, -depth/2),
-            new THREE.Vector3(-width, 0, -depth/10),
-            new THREE.Vector3(-width, 0, depth/2),
-            new THREE.Vector3(-width/1.5, 0, depth*1.3)
+            new THREE.Vector3(0, height, depth/2),
+            new THREE.Vector3(width, height, depth),
+            new THREE.Vector3(width, height, -depth/10),
+            new THREE.Vector3(0, height, -depth/2),
+            new THREE.Vector3(-width, height, -depth/10),
+            new THREE.Vector3(-width, height, depth/2),
+            new THREE.Vector3(-width/1.5, height, depth*1.3)
         ]));
         trackShapes.push(new THREE.CatmullRomCurve3([
-            new THREE.Vector3(width, 0, depth),
-            new THREE.Vector3(width, 0, -depth),
-            new THREE.Vector3(-width*1.75, 0, -depth),
-            new THREE.Vector3(-width*1.75, 0, 0),
-            new THREE.Vector3(width*0.3, 0, 0),
-            new THREE.Vector3(width*0.3, 0, depth)
+            new THREE.Vector3(width, height, depth),
+            new THREE.Vector3(width, height, -depth),
+            new THREE.Vector3(-width*1.75, height, -depth),
+            new THREE.Vector3(-width*1.75, height, 0),
+            new THREE.Vector3(width*0.3, height, 0),
+            new THREE.Vector3(width*0.3, height, depth)
         ]));
         trackShapes.push(new THREE.CatmullRomCurve3([
-            new THREE.Vector3(width*0.2, 0, depth*1.1),
-            new THREE.Vector3(width*0.2, 0, depth*0.1),
-            new THREE.Vector3(width*1.5, 0, -depth*0.9),
-            new THREE.Vector3(width, 0, -depth*1.1),
-            new THREE.Vector3(0, 0, -depth*0.15),
-            new THREE.Vector3(-width, 0, -depth*1.1),
-            new THREE.Vector3(-width*1.5, 0, -depth*0.9),
-            new THREE.Vector3(-width*0.2, 0, depth*0.1),
-            new THREE.Vector3(-width*0.2, 0, depth*1.1)
+            new THREE.Vector3(width*0.2, height, depth*1.1),
+            new THREE.Vector3(width*0.2, height, depth*0.1),
+            new THREE.Vector3(width*1.5, height, -depth*0.9),
+            new THREE.Vector3(width, height, -depth*1.1),
+            new THREE.Vector3(0, height, -depth*0.15),
+            new THREE.Vector3(-width, height, -depth*1.1),
+            new THREE.Vector3(-width*1.5, height, -depth*0.9),
+            new THREE.Vector3(-width*0.2, height, depth*0.1),
+            new THREE.Vector3(-width*0.2, height, depth*1.1)
         ]));
 
         let numTracks = trackShapes.length;
@@ -446,6 +474,10 @@ $(document).ready(function() {
     $('.dropdown-menu li a').on('click', function () {
         // do something…
         app.selectTrain($(this).text());
+    });
+
+    $('#instructions').on("click", () => {
+        $('#myModal').modal();
     });
 
     app.run();
