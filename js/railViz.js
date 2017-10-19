@@ -440,6 +440,12 @@ class RailApp extends BaseApp {
 }
 
 $(document).ready(function() {
+    //Ensure webgl supported
+    if(!Detector.webgl) {
+        $('#notSupported').show();
+        return;
+    }
+
     //Init
     let container = document.getElementById("WebGL-output");
     let app = new RailApp();
