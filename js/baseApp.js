@@ -158,9 +158,9 @@ class BaseApp {
         this.controls.zoomSpeed = 1.0;
         this.controls.panSpeed = 1.0;
 
-        this.controls.noRotate = false;
-        this.controls.noPan = false;
-        this.controls.noRoll = false;
+        this.controls.noRotate = true;
+        this.controls.noPan = true;
+        this.controls.noRoll = true;
 
         this.controls.staticMoving = true;
         this.controls.dynamicDampingFactor = 0.3;

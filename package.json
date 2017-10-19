@@ -1,0 +1,19 @@
+{
+  "name": "railviz",
+  "version": "1.0.0",
+  "description": "Railway simulation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DoctorTone/RailViz.git"
+  },
+  "author": "Dr Tony Glover",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DoctorTone/RailViz/issues"
+  },
+  "homepage": "https://github.com/DoctorTone/RailViz#readme"
+}
