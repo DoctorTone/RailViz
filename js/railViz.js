@@ -318,8 +318,10 @@ class RailApp extends BaseApp {
                     if(train.passedStop()) {
                         if(!train.gotoNextStop()) {
                             //Need to take ghosts into account too
-                            if(++this.trainsStopped >= (NUM_TRAINS_PER_TRACK * 2)) {
-                                //console.log("All trains stopped");
+                            //DEBUG
+                            //console.log("Train stopped");
+                            if(++this.trainsStopped >= (NUM_TRAINS_PER_TRACK * 2 * 2)) {
+                                console.log("All trains stopped");
                                 this.reset();
                             }
                         }
