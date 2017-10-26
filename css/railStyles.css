@@ -30,7 +30,7 @@ body {
 .clearInfoPanel {
     position: absolute;
     color: #d9d7dc;
-    font-size: 1.5vw;
+    font-size: 2vw;
     padding: 1% 0;
     border-radius: 10px;
     background-color: rgba(70, 70, 70, 0.5);
@@ -39,26 +39,42 @@ body {
     font-family: 'bpdotsregular';
     font-size: 1.8vw;
 }
+.no-pad > [class^="col-"] {
+    padding-right: 0;
+    padding-left: 0;
+}
 #simControls {
     top: 2%;
     left: 2%;
-    width: 20%;
+    width: 25%;
+}
+#simControls p {
+    margin: 0;
 }
 #simControls img {
-    width: 100%;
+    width: 90%;
+}
+#simControls button {
+    width: 75%;
+    padding: 0;
 }
 #camControls {
     top: 2%;
-    left: 25%;
-    width: 20%;
+    left: 27.5%;
+    width: 40%;
+}
+#camControls button {
+    width: 40%;
+    padding: 0;
 }
 #timeDateOutput {
     top: 2%;
     right: 1%;
-    width: 20%;
+    width: 25%;
     background: #323232;
     padding: 1%;
     border-radius: 10px;
+    font-size: 4vw;
 }
 #version {
     left: 3%;
@@ -81,10 +97,10 @@ body {
     bottom: 1%;
 }
 #instructions img {
-    width: 70%;
+    width: 40%;
 }
 #copyright {
-    left: 12.5%;
+    left: 17.5%;
     bottom: 2.25%;
     color: white;
     font-size: 2vw;
