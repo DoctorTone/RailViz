@@ -5,6 +5,7 @@
 let ROT_INC = Math.PI/32;
 let NUM_TRAINS_PER_TRACK = 4;
 let NUM_TRACKS = 4;
+const MOBILE_WIDTH = 768;
 
 //Camera views
 let VIEWS = {
@@ -429,15 +430,12 @@ class RailApp extends BaseApp {
         }
     }
 
-    createGUI() {
-        this.guiControls = new function () {
-            this.ScaleX = 1.0;
-            this.ScaleY = 10.0;
-            this.ScaleZ = 1.0;
-            this.LightX = 0.0;
-            this.LightY = 200;
-            this.LightZ = 0;
-        };
+    stopNotifications(elemList) {
+        for(let i=0, numElems=elemList.length; i<numElems; ++i) {
+            $('#' + elemList[i]).contextmenu(() => {
+                return false;
+            });
+        }
     }
 }
 
@@ -448,12 +446,15 @@ $(document).ready(function() {
         return;
     }
 
+    if(window.innerWidth < MOBILE_WIDTH) {
+        $('#mainModal').modal();
+    }
+
     //Init
     let container = document.getElementById("WebGL-output");
     let app = new RailApp();
     app.init(container);
     app.createScene();
-    app.createGUI();
 
     $('#startStop').on("click", function() {
         app.startStopAnimation();
@@ -487,6 +488,9 @@ $(document).ready(function() {
     $('#instructions').on("click", () => {
         $('#myModal').modal();
     });
+
+    let elemList = ["simControls", "camControls", "timeDateOutput", "instructions", "copyright"];
+    app.stopNotifications(elemList);
 
     app.run();
 });
