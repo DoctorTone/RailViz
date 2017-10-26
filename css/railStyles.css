@@ -34,7 +34,6 @@ body {
     padding: 1% 0;
     border-radius: 10px;
     background-color: rgba(70, 70, 70, 0.5);
-    height: 21vh;
 }
 .ledDisplay {
     font-family: 'bpdotsregular';
@@ -43,19 +42,20 @@ body {
 #simControls {
     top: 2%;
     left: 2%;
-    width: 12.5%;
+    width: 20%;
 }
 #simControls img {
     width: 100%;
 }
 #camControls {
     top: 2%;
-    left: 16%;
-    width: 12.5%;
+    left: 25%;
+    width: 20%;
 }
 #timeDateOutput {
     top: 2%;
     right: 1%;
+    width: 20%;
     background: #323232;
     padding: 1%;
     border-radius: 10px;
@@ -81,13 +81,13 @@ body {
     bottom: 1%;
 }
 #instructions img {
-    width: 60%;
+    width: 70%;
 }
 #copyright {
-    left: 7.5%;
+    left: 12.5%;
     bottom: 2.25%;
     color: white;
-    font-size: 1.5vw;
+    font-size: 2vw;
 }
 #notSupported {
     top: 20%;

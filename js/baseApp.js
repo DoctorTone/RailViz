@@ -2,6 +2,11 @@
  * Created by atg on 14/05/2014.
  */
 //Common baseline for visualisation app
+const CAM_FAR_X = 0;
+const CAM_FAR_Y = 1635;
+const CAM_FAR_Z = 4600;
+const FAR_OFFSET_Y = 250;
+const FAR_OFFSET_Z = 750;
 
 class BaseApp {
     constructor() {
@@ -24,6 +29,7 @@ class BaseApp {
         this.clock.start();
         this.raycaster = new THREE.Raycaster();
         this.objectsPicked = false;
+        this.cameraMode = 0;
     }
 
     init(container) {
@@ -112,6 +118,7 @@ class BaseApp {
         this.camera.updateProjectionMatrix();
 
         this.renderer.setSize( window.innerWidth, window.innerHeight);
+        this.fitToScreen();
     }
 
     createScene() {
@@ -146,10 +153,13 @@ class BaseApp {
 
     createCamera() {
         const CAM_X = 0, CAM_Y = 560, CAM_Z = 1740;
+        let camNear = new THREE.Vector3(CAM_X, CAM_Y, CAM_Z);
+        let camFar = new THREE.Vector3(CAM_FAR_X, CAM_FAR_Y, CAM_FAR_Z);
         const NEAR_PLANE = 0.1, FAR_PLANE = 10000;
-        this.defaultCamPos = new THREE.Vector3(CAM_X, CAM_Y, CAM_Z);
         this.camera = new THREE.PerspectiveCamera(45, this.container.clientWidth / window.innerHeight, NEAR_PLANE, FAR_PLANE );
-        this.camera.position.copy(this.defaultCamPos);
+        this.camera.position.copy(camNear);
+        this.camPosNear = camNear;
+        this.camPosFar = camFar;
     }
 
     createControls() {
@@ -172,8 +182,16 @@ class BaseApp {
         this.controls.setLookAt(lookAt);
     }
 
-    setCamera(cameraProp) {
-        this.camera.position.set(cameraProp[0].x, cameraProp[0].y, cameraProp[0].z);
+    setCamera(cameraProp, mode) {
+        if(mode !== undefined) {
+            let camPos = mode === NEAR ? this.camPosNear : this.camPosFar;
+            this.camera.position.copy(camPos);
+            this.cameraMode = mode;
+            return;
+        }
+        let yPos = this.cameraMode === 1 ? cameraProp[0].y + FAR_OFFSET_Y : cameraProp[0].y;
+        let zPos = this.cameraMode === 1 ? cameraProp[0].z + FAR_OFFSET_Z : cameraProp[0].z;
+        this.camera.position.set(cameraProp[0].x, yPos, zPos);
         this.controls.setLookAt(cameraProp[1]);
     }
 

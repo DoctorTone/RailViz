@@ -6,6 +6,8 @@ let ROT_INC = Math.PI/32;
 let NUM_TRAINS_PER_TRACK = 4;
 let NUM_TRACKS = 4;
 const MOBILE_WIDTH = 768;
+const NEAR = 0;
+const FAR = 1;
 
 //Camera views
 let VIEWS = {
@@ -50,6 +52,7 @@ class RailApp extends BaseApp {
     createScene() {
         super.createScene();
 
+        this.fitToScreen();
         //Skybox
         this.addToScene(this.makeSkyBox());
 
@@ -286,6 +289,15 @@ class RailApp extends BaseApp {
                 uniforms : skyboxShader.uniforms, depthWrite : false, side : THREE.BackSide
             })
         );
+    }
+
+    fitToScreen() {
+        //If in portrait mode then move camera
+        if(window.innerHeight > window.innerWidth) {
+            this.setCamera(null, FAR);
+        } else {
+            this.setCamera(null, NEAR);
+        }
     }
 
     update() {
