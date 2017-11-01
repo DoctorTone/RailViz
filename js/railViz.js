@@ -6,8 +6,6 @@ let ROT_INC = Math.PI/32;
 let NUM_TRAINS_PER_TRACK = 4;
 let NUM_TRACKS = 4;
 const MOBILE_WIDTH = 768;
-const NEAR = 0;
-const FAR = 1;
 
 //Camera views
 let VIEWS = {
@@ -19,11 +17,11 @@ let VIEWS = {
 };
 
 let cameraViews = {
-        all: [new THREE.Vector3(0, 560, 1740), new THREE.Vector3(0, -95, 0)],
-        track0: [ new THREE.Vector3(0, 260, 1360), new THREE.Vector3(0, -250, 0)],
-        track1: [ new THREE.Vector3(820, 290, 630), new THREE.Vector3(820, 50, 0)],
-        track2: [ new THREE.Vector3(0, 270, 50), new THREE.Vector3(0, 255, -5)],
-        track3: [ new THREE.Vector3(-830, 235, 645), new THREE.Vector3(-800, -15, -5)]
+        all: [new THREE.Vector3(0, 735, 2200), new THREE.Vector3(0, -95, 0)],
+        track0: [ new THREE.Vector3(0, 560, 2176), new THREE.Vector3(0, -250, 0)],
+        track1: [ new THREE.Vector3(820, 475, 1120), new THREE.Vector3(820, 50, 0)],
+        track2: [ new THREE.Vector3(0, 525, 985), new THREE.Vector3(0, 255, -5)],
+        track3: [ new THREE.Vector3(-860, 465, 1240), new THREE.Vector3(-800, -15, -5)]
     };
 
 let viewOrder = ['front', 'right', 'back', 'left'];
@@ -294,9 +292,9 @@ class RailApp extends BaseApp {
     fitToScreen() {
         //If in portrait mode then move camera
         if(window.innerHeight > window.innerWidth) {
-            this.setCamera(null, FAR);
+            this.setCamera(null, PORTRAIT);
         } else {
-            this.setCamera(null, NEAR);
+            this.setCamera(null, LANDSCAPE);
         }
     }
 
@@ -370,7 +368,7 @@ class RailApp extends BaseApp {
     }
 
     resetView() {
-        this.setCamera(cameraViews.all);
+        this.resetCamera();
         this.trackView = -1;
         $('#mainView').addClass("active");
         this.deselectTracks();
