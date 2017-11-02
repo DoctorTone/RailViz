@@ -6,7 +6,7 @@ let ROT_INC = Math.PI/32;
 let NUM_TRAINS_PER_TRACK = 4;
 let NUM_TRACKS = 4;
 const MOBILE_WIDTH = 768;
-
+const ZOOM_SPEED = 50;
 
 //Camera views
 let VIEWS = {
@@ -46,6 +46,8 @@ class RailApp extends BaseApp {
         this.currentTrain = 0;
         this.trains = [];
         this.trainsStopped = 0;
+        this.zoomingOut = false;
+        this.zoomingIn = false;
     }
 
     init(container) {
@@ -64,6 +66,11 @@ class RailApp extends BaseApp {
         this.fitToScreen();
         //Skybox
         this.addToScene(this.makeSkyBox());
+
+        let root = new THREE.Object3D();
+        root.name = "root";
+        this.addToScene(root);
+        this.root = root;
 
         //Geometry parameters
         let sceneConfig = {
@@ -92,7 +99,7 @@ class RailApp extends BaseApp {
             let planeMat = new THREE.MeshLambertMaterial( {map: groundTex} );
             let plane = new THREE.Mesh(planeGeom, planeMat);
             plane.rotation.x = -Math.PI/2;
-            this.addToScene(plane);
+            this.root.add(plane);
         });
 
         //Platform
@@ -117,9 +124,9 @@ class RailApp extends BaseApp {
                     nextPlatform = platform.clone();
                     nextPlatform.position.copy(platformPos[i]);
                     nextPlatform.scale.set(platformScale[i], SCALE, platformScale[i]);
-                    this.addToScene(nextPlatform);
+                    this.root.add(nextPlatform);
                 }
-                this.addToScene(platform);
+                this.root.add(platform);
             })
         });
 
@@ -198,14 +205,14 @@ class RailApp extends BaseApp {
             this.trackGroups.push(new THREE.Object3D());
             this.trackGroups[i].add(this.tubeMeshes[i]);
             this.trackGroups[i].position.copy(trackPositions[i]);
-            this.addToScene(this.trackGroups[i]);
+            this.root.add(this.trackGroups[i]);
             post = new THREE.Mesh(postGeom, postMat);
             post.position.copy(trackPositions[i]);
             post.position.y += sceneConfig.POST_HEIGHT/2;
-            this.addToScene(post);
+            this.root.add(post);
             trackPositions[i].y += (sceneConfig.POST_HEIGHT + signPostOffset);
             sign = spriteManager.create(signPosts[i], trackPositions[i], labelScale, 32, 1, true, true);
-            this.addToScene(sign);
+            this.root.add(sign);
         }
         this.trackGroups[1].rotation.y = Math.PI/2;
 
@@ -348,6 +355,14 @@ class RailApp extends BaseApp {
             }
         }
 
+        if(this.zoomingOut) {
+            this.root.position.z -= ZOOM_SPEED * delta;
+        }
+
+        if(this.zoomingIn) {
+            this.root.position.z += ZOOM_SPEED * delta;
+        }
+
         super.update();
     }
 
@@ -365,7 +380,7 @@ class RailApp extends BaseApp {
             return;
         }
 
-        if(trackNumber != this.trackView) {
+        if(trackNumber !== this.trackView) {
             $('#track' + trackNumber).addClass('active');
             $('#track' + this.trackView).removeClass('active');
             $('#mainView').removeClass("active");
@@ -447,6 +462,14 @@ class RailApp extends BaseApp {
         }
     }
 
+    zoomOut(zoom) {
+        this.zoomingOut = zoom;
+    }
+
+    zoomIn(zoom) {
+        this.zoomingIn = zoom;
+    }
+
     stopNotifications(elemList) {
         for(let i=0, numElems=elemList.length; i<numElems; ++i) {
             $('#' + elemList[i]).contextmenu(() => {
@@ -506,8 +529,42 @@ $(document).ready(function() {
         $('#myModal').modal();
     });
 
-    let elemList = ["simControls", "camControls", "timeDateOutput", "instructions", "copyright"];
+    let elemList = ["simControls", "camControls", "timeDateOutput", "instructions", "copyright", "zoomControl"];
     app.stopNotifications(elemList);
+
+    let zoomOutElement = $('#zoomOut');
+    let zoomInElement = $('#zoomIn');
+    zoomOutElement.on("mousedown", () => {
+        app.zoomOut(true);
+    });
+
+    zoomOutElement.on("mouseup", () => {
+        app.zoomOut(false);
+    });
+
+    zoomOutElement.on("touchstart", () => {
+        app.zoomOut(true);
+    });
+
+    zoomOutElement.on("touchend", () => {
+        app.zoomOut(false);
+    });
+
+    zoomInElement.on("mousedown", () => {
+        app.zoomIn(true);
+    });
+
+    zoomInElement.on("mouseup", () => {
+        app.zoomIn(false);
+    });
+
+    zoomInElement.on("touchstart", () => {
+        app.zoomIn(true);
+    });
+
+    zoomInElement.on("touchend", () => {
+        app.zoomIn(false);
+    });
 
     app.run();
 });
