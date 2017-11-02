@@ -50,6 +50,7 @@ body {
 }
 #simControls p {
     margin: 0;
+    font-size: 4vw;
 }
 #simControls img {
     width: 90%;
@@ -62,6 +63,9 @@ body {
     top: 2%;
     left: 27.5%;
     width: 40%;
+}
+#camControls p {
+    font-size: 4vw;
 }
 #camControls button {
     width: 40%;
@@ -76,9 +80,21 @@ body {
     border-radius: 10px;
     font-size: 4vw;
 }
-#version {
-    left: 3%;
-    bottom: 2%;
+#zoomControl {
+    bottom: 2.5%;
+    right: 1%;
+    width: 20%;
+}
+#zoomControl p {
+    font-size: 4vw;
+    margin: 0;
+}
+#zoomControl button {
+    width: 45%;
+    padding: 2.5% 0;
+}
+#zoomControl img {
+    width: 90%;
 }
 #selectTrackContainer {
     margin-top: 5%;
@@ -103,7 +119,7 @@ body {
     left: 17.5%;
     bottom: 2.25%;
     color: white;
-    font-size: 2vw;
+    font-size: 3vw;
 }
 #notSupported {
     top: 20%;
@@ -120,10 +136,24 @@ body {
     #simControls {
         width: 20%;
     }
+    #simControls p,
+    #camControls p {
+        font-size: 2.5vw;
+    }
     #camControls {
         width: 30%;
     }
     #timeDateOutput {
+        font-size: 2.5vw;
+    }
+    #copyright {
+        font-size: 2.5vw;
+        left: 12%;
+    }
+    #zoomControl {
+        width: 12.5%;
+    }
+    #zoomControl p {
         font-size: 2.5vw;
     }
 }
