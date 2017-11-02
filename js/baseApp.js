@@ -30,6 +30,7 @@ class BaseApp {
         this.raycaster = new THREE.Raycaster();
         this.objectsPicked = false;
         this.cameraMode = 0;
+        this.orientation;
     }
 
     init(container) {
@@ -39,7 +40,11 @@ class BaseApp {
         this.createControls();
         //this.stats = initStats();
         this.statsShowing = false;
-        //$("#Stats-output").hide();
+        //$("#Stats-output").hide()
+    }
+
+    setOrientation(orientation) {
+        this.orientation = orientation;
     }
 
     createRenderer() {
@@ -157,7 +162,7 @@ class BaseApp {
         let camLandscape = new THREE.Vector3(CAM_LANDSCAPE_X, CAM_LANDSCAPE_Y, CAM_LANDSCAPE_Z);
         const NEAR_PLANE = 0.1, FAR_PLANE = 10000;
         this.camera = new THREE.PerspectiveCamera(45, this.container.clientWidth / window.innerHeight, NEAR_PLANE, FAR_PLANE );
-        this.camera.position.copy(camPortrait);
+        this.camera.position.copy(this.orientation === PORTRAIT ? camPortrait : camLandscape);
         this.camPosPortrait = camPortrait;
         this.camPosLandscape = camLandscape;
     }
@@ -180,6 +185,8 @@ class BaseApp {
         const LOOK_X = 0, LOOK_Y = -95, LOOK_Z = 0;
         let lookAt = new THREE.Vector3(LOOK_X, LOOK_Y, LOOK_Z);
         this.controls.setLookAt(lookAt);
+        this.defaultLookAt = new THREE.Vector3();
+        this.defaultLookAt.copy(lookAt);
     }
 
     setCamera(cameraProp, mode) {
@@ -196,6 +203,7 @@ class BaseApp {
     resetCamera() {
         let camPos = this.cameraMode === PORTRAIT ? this.camPosPortrait : this.camPosLandscape;
         this.camera.position.copy(camPos);
+        this.controls.setLookAt(this.defaultLookAt);
     }
 
     update() {

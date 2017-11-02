@@ -7,6 +7,7 @@ let NUM_TRAINS_PER_TRACK = 4;
 let NUM_TRACKS = 4;
 const MOBILE_WIDTH = 768;
 
+
 //Camera views
 let VIEWS = {
     MAIN: 0,
@@ -16,13 +17,19 @@ let VIEWS = {
     TRACK3: 4
 };
 
-let cameraViews = {
-        all: [new THREE.Vector3(0, 735, 2200), new THREE.Vector3(0, -95, 0)],
+let cameraViewsPortrait = {
         track0: [ new THREE.Vector3(0, 560, 2176), new THREE.Vector3(0, -250, 0)],
         track1: [ new THREE.Vector3(820, 475, 1120), new THREE.Vector3(820, 50, 0)],
         track2: [ new THREE.Vector3(0, 525, 985), new THREE.Vector3(0, 255, -5)],
         track3: [ new THREE.Vector3(-860, 465, 1240), new THREE.Vector3(-800, -15, -5)]
     };
+
+let cameraViewsLandscape = {
+    track0: [ new THREE.Vector3(0, 350, 1500), new THREE.Vector3(0, -250, 0)],
+    track1: [ new THREE.Vector3(820, 311, 688), new THREE.Vector3(820, 50, 0)],
+    track2: [ new THREE.Vector3(0, 283, 99), new THREE.Vector3(0, 255, -5)],
+    track3: [ new THREE.Vector3(-836, 280, 758), new THREE.Vector3(-800, -15, -5)]
+};
 
 let viewOrder = ['front', 'right', 'back', 'left'];
 
@@ -42,9 +49,13 @@ class RailApp extends BaseApp {
     }
 
     init(container) {
-        super.init(container);
+        if(window.innerHeight > window.innerWidth) {
+            this.setOrientation(PORTRAIT);
+        } else {
+            this.setOrientation(LANDSCAPE);
+        }
 
-        this.setCamera(cameraViews.all);
+        super.init(container);
     }
 
     createScene() {
@@ -291,11 +302,7 @@ class RailApp extends BaseApp {
 
     fitToScreen() {
         //If in portrait mode then move camera
-        if(window.innerHeight > window.innerWidth) {
-            this.setCamera(null, PORTRAIT);
-        } else {
-            this.setCamera(null, LANDSCAPE);
-        }
+        this.setCamera(null, this.orientation);
     }
 
     update() {
@@ -362,7 +369,7 @@ class RailApp extends BaseApp {
             $('#track' + trackNumber).addClass('active');
             $('#track' + this.trackView).removeClass('active');
             $('#mainView').removeClass("active");
-            this.setCamera(cameraViews[track]);
+            this.setCamera(this.orientation === PORTRAIT ? cameraViewsPortrait[track] : cameraViewsLandscape[track]);
             this.trackView = trackNumber;
         }
     }
