@@ -47,6 +47,7 @@ body {
     top: 2%;
     left: 2%;
     width: 25%;
+    -webkit-touch-callout: none;
 }
 #simControls p {
     margin: 0;
@@ -63,6 +64,7 @@ body {
     top: 2%;
     left: 27.5%;
     width: 40%;
+    -webkit-touch-callout: none;
 }
 #camControls p {
     font-size: 4vw;
@@ -79,11 +81,13 @@ body {
     padding: 1%;
     border-radius: 10px;
     font-size: 4vw;
+    -webkit-touch-callout: none;
 }
 #zoomControl {
     bottom: 2.5%;
     right: 1%;
     width: 20%;
+    -webkit-touch-callout: none;
 }
 #zoomControl p {
     font-size: 4vw;
@@ -111,6 +115,7 @@ body {
 #instructions {
     left: 1%;
     bottom: 1%;
+    -webkit-touch-callout: none;
 }
 #instructions img {
     width: 40%;
@@ -120,6 +125,7 @@ body {
     bottom: 2.25%;
     color: white;
     font-size: 3vw;
+    -webkit-touch-callout: none;
 }
 #notSupported {
     top: 20%;
@@ -155,5 +161,89 @@ body {
     }
     #zoomControl p {
         font-size: 2.5vw;
+    }
+}
+@media (min-width: 568px) and (orientation: portrait) {
+    #simControls {
+        width: 27.5%;
+    }
+    #camControls {
+        width: 40%;
+        left: 32.5%;
+    }
+    #timeDateOutput {
+        font-size: 3.5vw;
+    }
+    #zoomControl {
+        width: 17.5%;
+    }
+    #zoomControl p {
+        font-size: 4vw;
+    }
+}
+@media (min-width: 768px) {
+    #simControls img {
+        width: 70%;
+    }
+    #camControls {
+        width: 25%;
+        left: 25%;
+    }
+    #copyright {
+        font-size: 1.75vw;
+        left: 10%;
+    }
+}
+@media (min-width: 768px) and (orientation: portrait) {
+    #simControls {
+        width: 30%;
+    }
+    #simControls img {
+        width: 85%;
+    }
+    #simControls button {
+        padding: 2% 0;
+        font-size: 3vw;
+    }
+    #camControls {
+        width: 35%;
+        left: 32.5%;
+    }
+    #camControls button {
+        font-size: 2.5vw;
+        padding: 2% 0;
+    }
+}
+@media (min-width: 992px) {
+    #simControls img {
+        width: 80%;
+    }
+    #simControls button {
+        font-size: 2.25vw;
+        padding: 2% 0;
+    }
+    #camControls button {
+        font-size: 2vw;
+        padding: 1% 0;
+    }
+    #instructions {
+        bottom: 2.5%;
+    }
+    #instructions img {
+        width: 50%;
+    }
+}
+@media (min-width: 992px) and (orientation: portrait) {
+    #camControls button {
+        font-size: 2.5vw;
+        padding: 2% 0;
+    }
+}
+@media (min-width: 1200px) {
+    #instructions {
+        bottom: 1%;
+    }
+    #instructions img {
+        width: 60%;
     }
 }
