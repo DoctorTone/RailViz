@@ -240,10 +240,50 @@ body {
     }
 }
 @media (min-width: 1200px) {
+    #simControls {
+        width: 15%;
+    }
+    #simControls img {
+        width: 65%;
+    }
+    #simControls p {
+        font-size: 2vw;
+    }
+    #simControls button {
+        font-size: 1.25vw;
+        padding: 0;
+    }
+    #camControls {
+        width: 20%;
+        left: 20%;
+        padding-bottom: 0.5%;
+    }
+    #camControls p {
+        font-size: 2vw;
+        margin: 0;
+    }
+    #camControls button {
+        font-size: 1.25vw;
+        padding: 0;
+    }
+    #selectTrackContainer {
+        margin-top: 0;
+    }
+    #timeDateOutput {
+        width: 17.5%;
+        font-size: 1.5vw;
+    }
     #instructions {
         bottom: 1%;
     }
     #instructions img {
         width: 60%;
+    }
+    #zoomControl {
+        width: 7.5%;
+    }
+    #copyright {
+        left: 7.5%;
+        font-size: 1.5vw;
     }
 }
