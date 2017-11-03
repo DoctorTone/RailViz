@@ -287,3 +287,24 @@ body {
         font-size: 1.5vw;
     }
 }
+@media (min-width: 1680px) {
+    #simControls {
+        width: 12.5%;
+    }
+    #simControls p {
+        font-size: 1.25vw;
+    }
+    #camControls {
+        left: 15%;
+        width: 15%;
+    }
+    #camControls p {
+        font-size: 1.25vw;
+    }
+    #zoomControl {
+        width: 7%;
+    }
+    #zoomControl p {
+        font-size: 1.75vw;
+    }
+}
