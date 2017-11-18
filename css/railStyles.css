@@ -128,14 +128,17 @@ body {
     -webkit-touch-callout: none;
 }
 #notSupported {
-    top: 20%;
+    top: 40%;
     left: 12.5%;
     width: 75%;
     background-color: #3e3e3e;
     color: white;
-    font-size: 1.25vw;
+    font-size: 2.5vw;
     border-radius: 15px;
     padding: 1%;
+}
+#notSupported p img {
+    width: 25%;
 }
 /* Media queries */
 @media (min-width: 568px) {
@@ -162,6 +165,13 @@ body {
     #zoomControl p {
         font-size: 2.5vw;
     }
+    #notSupported {
+        top: 35%;
+        font-size: 2.25vw;
+    }
+    #notSupported p img {
+        width: 20%;
+    }
 }
 @media (min-width: 568px) and (orientation: portrait) {
     #simControls {
@@ -179,6 +189,13 @@ body {
     }
     #zoomControl p {
         font-size: 4vw;
+    }
+    #notSupported {
+        top: 35%;
+        font-size: 2.5vw;
+    }
+    #notSupported p img {
+        width: 25%;
     }
 }
 @media (min-width: 768px) {
@@ -212,6 +229,13 @@ body {
     #camControls button {
         font-size: 2.5vw;
         padding: 2% 0;
+    }
+    #notSupported {
+        top: 35%;
+        font-size: 2.75vw;
+    }
+    #notSupported p img {
+        width: 30%;
     }
 }
 @media (min-width: 992px) {
@@ -286,6 +310,13 @@ body {
         left: 7.5%;
         font-size: 1.5vw;
     }
+    #notSupported {
+        top: 30%;
+        font-size: 2.25vw;
+    }
+    #notSupported p img {
+        width: 20%;
+    }
 }
 @media (min-width: 1680px) {
     #simControls {
@@ -306,5 +337,12 @@ body {
     }
     #zoomControl p {
         font-size: 1.75vw;
+    }
+    #notSupported {
+        top: 30%;
+        font-size: 1.75vw;
+    }
+    #notSupported p img {
+        width: 12.5%;
     }
 }

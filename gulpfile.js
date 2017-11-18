@@ -11,7 +11,7 @@ var concat = require("gulp-concat");
 gulp.task("build", ["compile", "min-copy"], function() {
 
 });
-
+npm i
 var DEST = "./temp/js";
 gulp.task("compile", function() {
     return gulp.src(["./js/*.js", "!./js/*.min.js"])
@@ -73,7 +73,7 @@ gulp.task("concatJS", function() {
 });
 
 gulp.task("concatCSS", function() {
-    gulp.src(["build/css/railStyles.min.css", "build/css/bootstrap.min.css", "build/css/bootstrap-theme.min.css"])
+    gulp.src(["build/css/bootstrap.min.css", "build/css/railStyles.min.css"])
         .pipe(concat("build.min.css"))
         .pipe(gulp.dest("dist/css/"));
 });
