@@ -122,10 +122,10 @@ body {
     width: 100%;
 }
 #copyright {
-    left: 17.5%;
-    bottom: 2.25%;
+    left: 15%;
+    bottom: 1.5%;
     color: white;
-    font-size: 3vw;
+    font-size: 3.5vw;
     -webkit-touch-callout: none;
 }
 #notSupported {
@@ -157,8 +157,8 @@ body {
         font-size: 2.5vw;
     }
     #copyright {
-        font-size: 2.5vw;
-        left: 12%;
+        font-size: 2.25vw;
+        left: 11%;
     }
     #zoomControl {
         width: 12.5%;
@@ -204,6 +204,10 @@ body {
     #instructions {
         width: 10%;
     }
+    #copyright {
+        font-size: 2.75vw;
+        left: 12.5%;
+    }
 }
 @media (min-width: 768px) {
     #simControls img {
@@ -214,7 +218,7 @@ body {
         left: 25%;
     }
     #copyright {
-        font-size: 1.75vw;
+        font-size: 2vw;
         left: 10%;
     }
 }
@@ -243,6 +247,10 @@ body {
     }
     #notSupported p img {
         width: 30%;
+    }
+    #copyright {
+        font-size: 2.5vw;
+        left: 12%;
     }
 }
 @media (min-width: 992px) {
@@ -345,5 +353,8 @@ body {
     }
     #instructions {
         width: 4.5%;
+    }
+    #copyright {
+        font-size: 1.25vw;
     }
 }
