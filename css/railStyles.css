@@ -115,10 +115,11 @@ body {
 #instructions {
     left: 1%;
     bottom: 1%;
+    width: 12.5%;
     -webkit-touch-callout: none;
 }
 #instructions img {
-    width: 40%;
+    width: 100%;
 }
 #copyright {
     left: 17.5%;
@@ -172,6 +173,9 @@ body {
     #notSupported p img {
         width: 20%;
     }
+    #instructions {
+        width: 7%;
+    }
 }
 @media (min-width: 568px) and (orientation: portrait) {
     #simControls {
@@ -196,6 +200,9 @@ body {
     }
     #notSupported p img {
         width: 25%;
+    }
+    #instructions {
+        width: 10%;
     }
 }
 @media (min-width: 768px) {
@@ -250,12 +257,6 @@ body {
         font-size: 2vw;
         padding: 1% 0;
     }
-    #instructions {
-        bottom: 2.5%;
-    }
-    #instructions img {
-        width: 50%;
-    }
 }
 @media (min-width: 992px) and (orientation: portrait) {
     #camControls button {
@@ -298,10 +299,7 @@ body {
         font-size: 1.5vw;
     }
     #instructions {
-        bottom: 1%;
-    }
-    #instructions img {
-        width: 60%;
+        width: 5%;
     }
     #zoomControl {
         width: 7.5%;
@@ -344,5 +342,8 @@ body {
     }
     #notSupported p img {
         width: 12.5%;
+    }
+    #instructions {
+        width: 4.5%;
     }
 }
